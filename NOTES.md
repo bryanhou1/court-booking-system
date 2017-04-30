@@ -31,6 +31,6 @@ bookings belongs to users
 -limit amount of times a booking can be altered.
 	-new edits-counter attribute for bookings
 -display bookings through a calendar format?
--
+-add an admin account that can make changes to everyone's bookings
 
 

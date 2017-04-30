@@ -18,5 +18,6 @@ group :test do
   gem 'capybara'
   gem 'rack-test'
   gem 'shotgun'
-  gem 'database_cleaner', git: 'https://github.com/bmabey/database_cleaner.git'
+  gem 'database_cleaner', git: 'https://github.com/bmabey/database_cleaner.git' #should check on how to use this
 end
+

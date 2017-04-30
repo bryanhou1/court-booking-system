@@ -11,7 +11,7 @@ gem 'thin'
 gem 'bcrypt'
 gem 'rake'
 
-group :test do
+group :test, :development do
 	gem 'tux'
 	gem 'pry'
   gem 'rspec'

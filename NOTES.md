@@ -5,6 +5,7 @@ App is created for a sports booking system. It will allow users to signup and lo
 #Functionalities to be built
 CR of users
 CRUD of bookings
+	-make sure usernames are unique
 
 #Views
 -view of individual user's bookings [access: self]

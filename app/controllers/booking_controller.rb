@@ -1,6 +1,7 @@
 class BookingController < ApplicationController
 
 	get '/bookings/new' do
+		i
 		erb :'/booking/new'
 	end
 
@@ -16,7 +17,9 @@ class BookingController < ApplicationController
 	end
 
 	get '/bookings/:id' do
-		
+		@booking = Booking.find(params[:id])
+		if @booking
+			erb :'/bookings/show'
 	end
 
 	get '/bookings/edit' do

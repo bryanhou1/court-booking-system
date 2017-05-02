@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 20170430195354) do
 
   create_table "bookings", force: :cascade do |t|
-    t.string "time"
+    t.datetime "time"
     t.integer "user_id"
     t.integer "court"
     t.datetime "created_at", null: false

@@ -1,8 +1,8 @@
 class ApplicationController < Sinatra::Base
 	configure do
-		set :session_secret, "secret"
 		enable :sessions
-
+    set :session_secret, "secret"
+    
 		set :views, Proc.new { File.join(root, "../views/") }
 	end
 
@@ -18,13 +18,17 @@ class ApplicationController < Sinatra::Base
     end
 
     def logged_in?
-      !!session[:user_id]
+      !!session[:id]
     end
 
     def current_user
-      User.find(session[:user_id])
+      User.find_by(id: session[:id])
     end
 
 	end
+
+  get '/debug' do
+    binding.pry
+  end
 
 end

@@ -8,6 +8,9 @@ CRUD of bookings
 	-make sure usernames are unique
 
 #Views
+-sign up [access: prelogin]
+-login page [access: prelogin]
+
 -view of individual user's bookings [access: self]
 	-link to edit individual booking []
 	-link to delete booking
@@ -15,7 +18,7 @@ CRUD of bookings
 -view of availibilties/bookings [access: all]
 	-display format undecided
 
--sign in/login page [access: all]
+
 
 #Models
 users have attributes of username and password.

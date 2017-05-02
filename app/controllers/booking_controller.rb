@@ -32,6 +32,8 @@ class BookingController < ApplicationController
 		@booking = Booking.find(params[:id])
 		if @booking
 			erb :'/bookings/show'
+		else
+			
 		end
 	end
 

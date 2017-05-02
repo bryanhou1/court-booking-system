@@ -22,6 +22,9 @@ CRUD of bookings
 
 #Models
 users have attributes of username and password.
+weekly bookings have attributes 
+
+
 bookings has attributes of time, court no. and have timestamps (will start with 1 court and then expand functionality)
 
 

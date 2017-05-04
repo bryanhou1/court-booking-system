@@ -52,5 +52,16 @@ Booking.create([
 	court: 1,
 	created_at: DateTime.now,
 	updated_at: DateTime.now
-}
-])
+},{
+	time: DateTime.new(2017, 5, 9),
+	user_id: 2,
+	court: 1,
+	created_at: DateTime.now,
+	updated_at: DateTime.now
+},{
+	time: DateTime.new(2017, 5, 10),
+	user_id: 2,
+	court: 1,
+	created_at: DateTime.now,
+	updated_at: DateTime.now
+}])

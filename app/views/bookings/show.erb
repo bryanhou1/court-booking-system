@@ -2,5 +2,36 @@ SHOW.erb
 
 #should be able to create booking from this page
 
+#
+<% start_of_week = DateTime.now.beginning_of_week%>
+<% end_of_week = start_of_week + 1.week %>
 
-Bookings
+<h1>Remaining bookings for the week:</h1>
+
+<ul>
+<% Booking.order(:time).each { |booking| %>
+	<% if booking.time >  Time.now && booking.time < end_of_week %>
+		<li>
+			Booking time: <%= "#{booking.time}\n"%>
+			Booked by: <%= booking.user.username%>
+		</li>
+	<% end %>
+<% } %>
+</ul>
+
+
+<h1>Bookings in future weeks:</h1>
+
+<ul>
+<% Booking.order(:time).each { |booking| %>
+	<% if booking.time > end_of_week %>
+		<li>
+			Booking time: <%= "#{booking.time}\n"%>
+			Booked by: <%= booking.user.username%>	
+		</li>
+	<% end %>
+<% } %>
+</ul>
+
+
+

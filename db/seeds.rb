@@ -5,61 +5,85 @@ User.create(username: "user_3", password: "33")
 require 'date'
 Booking.create([
 {
-	time: DateTime.new(2017, 5, 1),
+	time: DateTime.new(2017, 5, 1, 0, 0, 0, '-04:00'),
 	user_id: 1,
 	court: 1,
 	created_at: DateTime.now,
 	updated_at: DateTime.now
 },{
-	time: DateTime.new(2017, 5, 2),
+	time: DateTime.new(2017, 5, 2, 0, 0, 0, '-04:00'),
 	user_id: 1,
 	court: 1,
 	created_at: DateTime.now,
 	updated_at: DateTime.now
 },{
-	time: DateTime.new(2017, 5, 3),
+	time: DateTime.new(2017, 5, 3, 0, 0, 0, '-04:00'),
 	user_id: 1,
 	court: 1,
 	created_at: DateTime.now,
 	updated_at: DateTime.now
 },{
-	time: DateTime.new(2017, 5, 4),
+	time: DateTime.new(2017, 5, 11, 0, 0, 0, '-04:00'),
+	user_id: 1,
+	court: 1,
+	created_at: DateTime.now,
+	updated_at: DateTime.now
+},{
+	time: DateTime.new(2017, 5, 12, 0, 0, 0, '-04:00'),
+	user_id: 1,
+	court: 1,
+	created_at: DateTime.now,
+	updated_at: DateTime.now
+},{
+	time: DateTime.new(2017, 5, 13, 0, 0, 0, '-04:00'),
+	user_id: 1,
+	court: 1,
+	created_at: DateTime.now,
+	updated_at: DateTime.now
+},{
+	time: DateTime.new(2017, 5, 17, 0, 0, 0, '-04:00'),
+	user_id: 1,
+	court: 1,
+	created_at: DateTime.now,
+	updated_at: DateTime.now
+},{
+	time: DateTime.new(2017, 5, 4, 0, 0, 0, '-04:00'),
 	user_id: 2,
 	court: 1,
 	created_at: DateTime.now,
 	updated_at: DateTime.now
 },{
-	time: DateTime.new(2017, 5, 5),
+	time: DateTime.new(2017, 5, 5, 0, 0, 0, '-04:00'),
 	user_id: 2,
 	court: 1,
 	created_at: DateTime.now,
 	updated_at: DateTime.now
 },{
-	time: DateTime.new(2017, 5, 6),
+	time: DateTime.new(2017, 5, 6, 0, 0, 0, '-04:00'),
 	user_id: 1,
 	court: 1,
 	created_at: DateTime.now,
 	updated_at: DateTime.now
 },{
-	time: DateTime.new(2017, 5, 7),
+	time: DateTime.new(2017, 5, 7, 0, 0, 0, '-04:00'),
 	user_id: 3,
 	court: 1,
 	created_at: DateTime.now,
 	updated_at: DateTime.now
 },{
-	time: DateTime.new(2017, 5, 8),
+	time: DateTime.new(2017, 5, 8, 0, 0, 0, '-04:00'),
 	user_id: 2,
 	court: 1,
 	created_at: DateTime.now,
 	updated_at: DateTime.now
 },{
-	time: DateTime.new(2017, 5, 9),
+	time: DateTime.new(2017, 5, 9, 0, 0, 0, '-04:00'),
 	user_id: 2,
 	court: 1,
 	created_at: DateTime.now,
 	updated_at: DateTime.now
 },{
-	time: DateTime.new(2017, 5, 10),
+	time: DateTime.new(2017, 5, 10, 0, 0, 0, '-04:00'),
 	user_id: 2,
 	court: 1,
 	created_at: DateTime.now,

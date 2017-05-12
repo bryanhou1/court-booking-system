@@ -1,16 +1,14 @@
 SHOW.erb
 
-#should be able to create booking from this page
-
-#
+<% #put these in helper method %>
 <% start_of_week = DateTime.now.beginning_of_week%>
 <% end_of_week = start_of_week + 1.week %>
 
-<h1>Remaining bookings for the week:</h1>
+<h1>Remaining reservations for the week:</h1>
 
 <ul>
-<% Booking.order(:time).each { |booking| %>
-	<% if booking.time >  Time.now && booking.time < end_of_week %>
+<% Booking.where("time > ?", DateTime.now).order(:time).each { |booking| %>
+	<% if booking.time < end_of_week %>
 		<li>
 			Booking time: <%= "#{booking.time}\n"%>
 			Booked by: <%= booking.user.username%>
@@ -20,18 +18,22 @@ SHOW.erb
 </ul>
 
 
-<h1>Bookings in future weeks:</h1>
+<h1>Bookings in the next week:</h1>
+
+<% day_counter = end_of_week %>
 
 <ul>
-<% Booking.order(:time).each { |booking| %>
-	<% if booking.time > end_of_week %>
-		<li>
-			Booking time: <%= "#{booking.time}\n"%>
-			Booked by: <%= booking.user.username%>	
-		</li>
-	<% end %>
-<% } %>
+<% while day_counter < end_of_week + 1.week do %>
+	<li>
+		<%= "Booking time: #{day_counter}" %>
+
+		<% if (booking = Booking.where("time = ?", day_counter)) != [] %>
+			Booked by: <%= booking.first.user.username %>
+		<% else %>
+			<%= "Availible - Book now" %> #make href
+		<% end %>
+	</li>
+	<% day_counter += 1.day %>
+<% end %>
 </ul>
-
-
 

@@ -6,5 +6,8 @@
 </head>
 <body>
 	<%= yield %>
+	<% if logged_in? %>
+		<a href="/signout">Log out</a>
+	<% end%>
 </body>
 </html>

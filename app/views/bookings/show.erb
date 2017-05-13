@@ -8,7 +8,7 @@
 <% Booking.where("time > ?", DateTime.now).order(:time).each { |booking| %>
 	<% if booking.time < end_of_week %>
 		<li>
-			Booking time: <%= "#{booking.time.strftime("%y-%_m-%e")}\n"%>
+			Booking time: <%= "#{booking.time.strftime("%F")}\n"%>
 			Booked by: <%= booking.user.username%>
 			<% if current_user == booking.user %>
 				<form action="/bookings/<%= booking.id %>/delete" method="post">
@@ -29,21 +29,24 @@
 <ul>
 <% while day_counter < end_of_week + 1.week do %>
 	<li>
-		<%= "Booking time: #{day_counter.strftime("%y-%_m-%e")}" %>
+		<%= "Booking time: #{day_counter.strftime("%F")}" %>
 
 		<% if (booking = Booking.where("time = ?", day_counter)) != [] %>
 			Booked by: <%= booking.first.user.username %>
 			<% if current_user == booking.first.user %>
-				<a href="#">Edit</a>###
+				<form action="/bookings/<%= booking.first.id %>/edit" method ="get">
+					<input type="submit" value='Edit'>
+				</form>
 
 				<form action="/bookings/<%= booking.first.id %>/delete" method="post">
 					<input id="hidden" type="hidden" name="_method" value="delete">
 					<input type="submit" value="Delete" id="delete">
 				</form>
+
 			<% end %>
 		<% else %>
 			<form action="/bookings" method="post">
-				<input type="text" name="time" value="<%= day_counter %>">
+				<input type="hidden" name="time" value="<%= day_counter %>">
 				<input type="submit" value="Book Now">
 			</form>
 		<% end %>

@@ -5,7 +5,7 @@ display USER's own bookings
 <% Booking.where(user_id: session[:id]).order(:time).each { |booking| %>
 		<% if booking.time < DateTime.now %>
 			<li>
-				Booking time: <%= "#{booking.time.strftime("%y/%_m/%e")}\n"%>
+				Booking time: <%= "#{booking.time.strftime("%y-%_m-%e")}\n"%>
 			</li>
 		<% end %>
 <% } %>
@@ -16,7 +16,7 @@ display USER's own bookings
 <% Booking.where(user_id: session[:id]).order(:time).each { |booking| %>
 	<% if booking.time >= DateTime.now %>
 		<li>
-			Booking time: <%= "#{booking.time.strftime("%y/%_m/%e")}\n"%>
+			Booking time: <%= "#{booking.time.strftime("%y-%_m-%e")}\n"%>
 			#link for edit and delete
 		</li>
 	<% end %>

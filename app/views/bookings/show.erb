@@ -11,7 +11,10 @@
 			Booking time: <%= "#{booking.time.strftime("%y-%_m-%e")}\n"%>
 			Booked by: <%= booking.user.username%>
 			<% if current_user == booking.user %>
-				#link for delete
+				<form action="/bookings/<%= booking.id %>/delete" method="post">
+					<input id="hidden" type="hidden" name="_method" value="delete">
+					<input type="submit" value="Delete" id="delete">
+				</form>
 			<% end %>
 		</li>
 	<% end %>
@@ -31,10 +34,18 @@
 		<% if (booking = Booking.where("time = ?", day_counter)) != [] %>
 			Booked by: <%= booking.first.user.username %>
 			<% if current_user == booking.first.user %>
-				#link for delete
+				<a href="#">Edit</a>###
+
+				<form action="/bookings/<%= booking.first.id %>/delete" method="post">
+					<input id="hidden" type="hidden" name="_method" value="delete">
+					<input type="submit" value="Delete" id="delete">
+				</form>
 			<% end %>
 		<% else %>
-			<%= "Book now" %> #make href
+			<form action="/bookings" method="post">
+				<input type="text" name="time" value="<%= day_counter %>">
+				<input type="submit" value="Book Now">
+			</form>
 		<% end %>
 	</li>
 	<% day_counter += 1.day %>

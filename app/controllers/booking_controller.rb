@@ -10,10 +10,15 @@ class BookingController < ApplicationController
 	end
 
 	post '/bookings' do
-		booking = Booking.new() #fix
+		# binding.pry
+		booking = Booking.new(
+			time: DateTime.strptime(params[:time], '%Y-%m-%dT%H:%M:%S%z'),
+			user_id: session[:id],
+			court: '1'
+			)
 
 		if booking.save
-			redirect "/bookings/#{booking.id}"
+			redirect "/bookings/#{booking.id}" #check
 		else
 			#flash msg
 			redirect '/bookings/new'
@@ -28,7 +33,7 @@ class BookingController < ApplicationController
 		end
 	end
 
-	get '/bookings/:id' do
+	get '/bookings/:id' do ####check if necessary
 		@booking = Booking.find(params[:id])
 		if @booking
 			erb :'/bookings/show'
@@ -57,9 +62,10 @@ class BookingController < ApplicationController
 	end
 
 	delete '/bookings/:id/delete' do
+		#check authorization
   	booking = Booking.find(params[:id])
   	booking.destroy
-  	redirect '/bookings'
+  	redirect '/bookings/show'
   end
 
 end

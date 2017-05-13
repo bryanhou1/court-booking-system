@@ -1,1 +1,24 @@
 display USER's own bookings
+
+<h1>Reservation history:</h1>
+<ul>
+<% Booking.where(user_id: session[:id]).order(:time).each { |booking| %>
+		<% if booking.time < DateTime.now %>
+			<li>
+				Booking time: <%= "#{booking.time.strftime("%y/%_m/%e")}\n"%>
+			</li>
+		<% end %>
+<% } %>
+</ul>
+
+<h1>Active Bookings:</h1>
+<ul>
+<% Booking.where(user_id: session[:id]).order(:time).each { |booking| %>
+	<% if booking.time >= DateTime.now %>
+		<li>
+			Booking time: <%= "#{booking.time.strftime("%y/%_m/%e")}\n"%>
+			#link for edit and delete
+		</li>
+	<% end %>
+<% } %>
+</ul>

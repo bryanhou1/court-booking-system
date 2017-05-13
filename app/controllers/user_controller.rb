@@ -21,6 +21,10 @@ class UserController < ApplicationController
 		redirect '/login'
 	end
 
+	get '/show' do
+		erb :'/users/show'
+	end
+
 	post  '/users' do #login auth
 		user = User.find_by(username: params[:username])
     if user && user.authenticate(params[:password])
@@ -35,7 +39,7 @@ class UserController < ApplicationController
 
 	post  '/users/new' do #sign up auth
 		if !params[:username].empty? && !params[:password].empty?
-			user= User.create(username: params[:username], password: params[:password])
+			user = User.create(username: params[:username], password: params[:password])
 			redirect "/bookings/show"
 		else
 			#flash msg

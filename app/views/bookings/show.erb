@@ -1,5 +1,3 @@
-SHOW.erb
-
 <% #put these in helper method %>
 <% start_of_week = DateTime.now.beginning_of_week%>
 <% end_of_week = start_of_week + 1.week %>
@@ -10,8 +8,11 @@ SHOW.erb
 <% Booking.where("time > ?", DateTime.now).order(:time).each { |booking| %>
 	<% if booking.time < end_of_week %>
 		<li>
-			Booking time: <%= "#{booking.time}\n"%>
+			Booking time: <%= "#{booking.time.strftime("%y-%_m-%e")}\n"%>
 			Booked by: <%= booking.user.username%>
+			<% if current_user == booking.user %>
+				#link for delete
+			<% end %>
 		</li>
 	<% end %>
 <% } %>
@@ -25,12 +26,15 @@ SHOW.erb
 <ul>
 <% while day_counter < end_of_week + 1.week do %>
 	<li>
-		<%= "Booking time: #{day_counter}" %>
+		<%= "Booking time: #{day_counter.strftime("%y-%_m-%e")}" %>
 
 		<% if (booking = Booking.where("time = ?", day_counter)) != [] %>
 			Booked by: <%= booking.first.user.username %>
+			<% if current_user == booking.first.user %>
+				#link for delete
+			<% end %>
 		<% else %>
-			<%= "Availible - Book now" %> #make href
+			<%= "Book now" %> #make href
 		<% end %>
 	</li>
 	<% day_counter += 1.day %>

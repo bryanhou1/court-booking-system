@@ -52,12 +52,14 @@ class BookingController < ApplicationController
 	end
 
 	patch '/bookings/:id' do
-		booking = Booking.find(params[:id])
+		@booking = Booking.find(params[:id])
+		@booking.time = DateTime.strptime(params[:time], '%Y-%m-%dT%H:%M:%S%z')
+		@booking.court = params[:court] 
 
-  	if booking.save
-  	redirect "/bookings/#{params[:id]}"
+  	if @booking.save
+  		redirect "/bookings/#{params[:id]}"
   	else
-  		#fix
+  		"error"
   	end
 	end
 

@@ -8,13 +8,18 @@
 <% Booking.where("time > ?", DateTime.now).order(:time).each { |booking| %>
 	<% if booking.time < end_of_week %>
 		<li>
-			Booking time: <%= "#{booking.time.strftime("%F")}\n"%>
-			Booked by: <%= booking.user.username%>
+			Booking time: <%= "#{booking.time.strftime("%F")}\n" %>
+			Booked by: <%= booking.user.username %>
 			<% if current_user == booking.user %>
+				<form action="/bookings/<%= booking.id %>/edit" method ="get">
+					<input type="submit" value='Edit'>
+				</form>
+
 				<form action="/bookings/<%= booking.id %>/delete" method="post">
 					<input id="hidden" type="hidden" name="_method" value="delete">
 					<input type="submit" value="Delete" id="delete">
 				</form>
+
 			<% end %>
 		</li>
 	<% end %>

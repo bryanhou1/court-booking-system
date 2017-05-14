@@ -9,7 +9,7 @@
   <select name="time">
 		<% while day_counter < end_of_week + 1.week%>
 			<% day_counter += 1.day %>
-			<option value="<%= day_counter %>" id="time" <%= 'disabled' if Booking.where("time = ?", day_counter) != [] %> <%= 'selected' if day_counter == @booking.time %>>
+			<option value="<%= day_counter %>" id="time" <%= 'disabled' if day_counter != @booking.time && Booking.where("time = ?", day_counter) != [] %> <%= 'selected' if day_counter == @booking.time %>>
 
 				<%= day_counter.strftime("%F") %>
 			</option>
@@ -19,7 +19,9 @@
 	<label>Court:</label>
   <input type="radio" name="court" value="1" <%= 'checked' if @booking.court == 1 %>> Court 1
   <input type="radio" name="court" value="2" <%= 'checked' if @booking.court == 2 %>> Court 2
-  
+<!-- should implement 'disabled' condition for the court change. if court is taken. 
+should consider removing court changes completely
+-->
 	<br>
 
 	<input type="submit" value="Update" id="update">

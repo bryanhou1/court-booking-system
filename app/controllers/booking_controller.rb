@@ -12,9 +12,9 @@ class BookingController < ApplicationController
 		booking = Booking.new(
 			time: DateTime.strptime(params[:time], '%Y-%m-%dT%H:%M:%S%z'),
 			user_id: session[:id],
-			court: '1'
+			court: params[:court]
 			)
-		
+
 		if booking.save
 			redirect '/bookings/show'
 		else
@@ -32,8 +32,8 @@ class BookingController < ApplicationController
 
 	get '/bookings/:id/edit' do
 		@booking = Booking.find_by(id: params[:id])
-		if session[:id] == @booking.user.id
-			if @booking && @booking.user.id = session[:id]
+		if session[:id] == @booking.user.id && @booking.time > DateTime.now
+			if @booking
 				erb :'/bookings/edit'
 			else
 				"error"
@@ -44,15 +44,35 @@ class BookingController < ApplicationController
 	end
 
 	patch '/bookings/:id' do
-		@booking = Booking.find(params[:id])
-		@booking.time = DateTime.strptime(params[:time], '%Y-%m-%dT%H:%M:%S%z')
-		@booking.court = params[:court] 
+		# binding.pry
+		if params[:court_1_time] == 'blank' || params[:court_2_time] == 'blank'
+			if params[:court_1_time] != params[:court_2_time]
+				@booking = Booking.find(params[:id])
+				if params[:court_1_time] != 'blank'
+					@booking.time = DateTime.strptime(params[:court_1_time], '%Y-%m-%dT%H:%M:%S%z')
+					@booking.court = 1
+				else
+					@booking.time = DateTime.strptime(params[:court_2_time], '%Y-%m-%dT%H:%M:%S%z')
+					@booking.court = 2
+				end
+				@booking.save
+		  	redirect '/bookings/show'
+			else
+				#no changes made
+				redirect '/bookings/show'
+			end
+		else
+			#multiple options selected
+			"error."
+		end
 
-  	if @booking.save
-  		redirect '/bookings/show'
-  	else
-  		"error"
-  	end
+
+
+		
+		
+		
+
+
 	end
 
 	delete '/bookings/:id/delete' do

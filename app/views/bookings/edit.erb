@@ -1,29 +1,46 @@
 <% start_of_week = DateTime.now.beginning_of_week%>
 <% end_of_week = start_of_week + 1.week %>
 <% day_counter = DateTime.now.beginning_of_day %>
- 
+<h1>Edit Current Booking</h1>
+
+<% booking = Booking.find(params[:id]) %>
+<p>
+	<strong>Current Reservation info:</strong> <br>
+	Time: <%= booking.time.strftime("%F") %><br>
+	Court: <%= booking.court %><br>
+</p>
+
+
+<strong>Change the booking to: </strong> <br>
 <form action="/bookings/<%= @booking.id %>" method="post">
 	<input id="hidden" type="hidden" name="_method" value="patch">
 	
-	<label>Reservation Time:</label>
-  <select name="time">
-		<% while day_counter < end_of_week + 1.week%>
+	<label>Court 1:</label>
+  <select name="court_1_time">
+  	<option value="blank"></option>
+
+		<% while day_counter < end_of_week + 6.days %>
 			<% day_counter += 1.day %>
-			<option value="<%= day_counter %>" id="time" <%= 'disabled' if day_counter != @booking.time && Booking.where("time = ?", day_counter) != [] %> <%= 'selected' if day_counter == @booking.time %>>
+			<option value="<%= "#{day_counter}" %>" <%= 'disabled' if day_counter != @booking.time && Booking.where("time = ? AND court = ?", day_counter, 1) != [] %>>
 
 				<%= day_counter.strftime("%F") %>
 			</option>
 		<% end %>
 	</select><br>
 
-######NEED TO FIX######
-	<label>Court:</label>
-  <input type="radio" name="court" value="1" <%= 'checked' if @booking.court == 1 %>> Court 1
-  <input type="radio" name="court" value="2" <%= 'checked' if @booking.court == 2 %>> Court 2
-<!-- should implement 'disabled' condition for the court change. if court is taken. 
-should consider removing court changes completely
--->
-	<br>
+	<label>Court 2:</label>
+  <select name="court_2_time">
+  	<option value="blank"></option>
+  	<% day_counter = DateTime.now.beginning_of_day %>
+		<% while day_counter < end_of_week + 6.days %>
+			<% day_counter += 1.day %>
+			<option value="<%= "#{day_counter}" %>" <%= 'disabled' if day_counter != @booking.time && Booking.where("time = ? AND court = ?", day_counter, 2) != [] %>>
+
+				<%= day_counter.strftime("%F") %>
+			</option>
+		<% end %>
+	</select><br>
+
 
 	<input type="submit" value="Update" id="update">
 </form>

@@ -6,18 +6,18 @@
 <% Booking.where(user_id: session[:id]).order(:time).each { |booking| %>
 		<% if booking.time < DateTime.now %>
 			<li>
-				Booked on: <%= "#{booking.time.strftime("%F")}\n"%>
+				 <%= "Court #{booking.court} booked for #{booking.time.strftime("%F")}\n"%>
 			</li>
 		<% end %>
 <% } %>
 </ul>
 
-<h2>Active Bookings:</h2>
+<h2>Active bookings:</h2>
 <ul>
 <% Booking.where(user_id: session[:id]).order(:time).each { |booking| %>
 	<% if booking.time >= DateTime.now %>
 		<li>
-			Booking time: <%= "#{booking.time.strftime("%F")}\n"%>
+			<%= "Court #{booking.court} - booked for #{booking.time.strftime("%F")}\n"%>
 			<form action="/bookings/<%= booking.id %>/edit" method ="get">
 				<input type="submit" value='Edit'>
 			</form>

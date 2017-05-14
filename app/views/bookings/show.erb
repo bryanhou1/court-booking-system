@@ -1,6 +1,7 @@
 <% #put these in helper method %>
 <% start_of_week = DateTime.now.beginning_of_week%>
 <% end_of_week = start_of_week + 1.week %>
+<% day_counter = end_of_week %>
 
 <h1>Remaining reservations for the week:</h1>
 
@@ -26,10 +27,7 @@
 <% } %>
 </ul>
 
-
 <h1>Bookings in the next week:</h1>
-
-<% day_counter = end_of_week %>
 
 <ul>
 <% while day_counter < end_of_week + 1.week do %>
@@ -59,4 +57,6 @@
 	<% day_counter += 1.day %>
 <% end %>
 </ul>
+
+Click <a href="/users/<%= current_user.username %>"> here </a> to see all of your bookings.<br>
 

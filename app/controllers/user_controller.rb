@@ -46,8 +46,14 @@ class UserController < ApplicationController
 			#flash msg
 			redirect '/signup'
 		end
-
 	end
 
+	get '/users/:username' do
+		if params[:username] == current_user.username
+			erb :'/users/show'
+		else
+			redirect '/bookings/show'
+		end
+	end
 end
 

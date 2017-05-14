@@ -2,7 +2,7 @@ class UserController < ApplicationController
 
 	get '/login' do #login page
 		if logged_in?
-			redirect '/bookings/show'
+			redirect '/bookings'
 		else
 			erb :'/users/login'
 		end
@@ -10,7 +10,7 @@ class UserController < ApplicationController
 
 	get '/signup' do #signup page
 		if logged_in?
-			redirect '/bookings/show'
+			redirect '/bookings'
 		else
 			erb :'/users/signup'
 		end
@@ -20,16 +20,12 @@ class UserController < ApplicationController
 		session.clear
 		redirect '/login'
 	end
-
-	get '/show' do
-		erb :'/users/show'
-	end
-
+	
 	post '/users' do #login auth
 		user = User.find_by(username: params[:username])
     if user && user.authenticate(params[:password])
       session[:id] = user.id
-      redirect '/bookings/show'
+      redirect '/bookings'
 		else
 			redirect '/signup'
 		end
@@ -40,7 +36,7 @@ class UserController < ApplicationController
 		if !params[:username].empty? && !params[:password].empty?
 			user = User.create(username: params[:username], password: params[:password])
 			session[:id] = user.id
-			redirect '/bookings/show'
+			redirect '/bookings'
 		else
 			redirect '/signup'
 		end
@@ -50,7 +46,7 @@ class UserController < ApplicationController
 		if params[:username] == current_user.username
 			erb :'/users/show'
 		else
-			redirect '/bookings/show'
+			redirect '/bookings'
 		end
 	end
 end

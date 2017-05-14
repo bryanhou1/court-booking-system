@@ -16,13 +16,13 @@ class BookingController < ApplicationController
 			)
 
 		if booking.save
-			redirect '/bookings/show'
+			redirect '/bookings'
 		else
 			redirect '/bookings/new'
 		end
 	end
 
-	get '/bookings/show' do
+	get '/bookings' do
 		if logged_in?
 			erb :'/bookings/show'
 		else
@@ -39,12 +39,11 @@ class BookingController < ApplicationController
 				"error"
 			end
 		else
-			redirect '/bookings/show'
+			redirect '/bookings'
 		end
 	end
 
 	patch '/bookings/:id' do
-		# binding.pry
 		if params[:court_1_time] == 'blank' || params[:court_2_time] == 'blank'
 			if params[:court_1_time] != params[:court_2_time]
 				@booking = Booking.find(params[:id])
@@ -56,22 +55,15 @@ class BookingController < ApplicationController
 					@booking.court = 2
 				end
 				@booking.save
-		  	redirect '/bookings/show'
+		  	redirect '/bookings'
 			else
 				#no changes made
-				redirect '/bookings/show'
+				redirect '/bookings'
 			end
 		else
 			#multiple options selected
 			"error."
 		end
-
-
-
-		
-		
-		
-
 
 	end
 
@@ -79,7 +71,7 @@ class BookingController < ApplicationController
 		if current_user.id == session[:id]
 	  	booking = Booking.find(params[:id])
 	  	booking.destroy
-	  	redirect '/bookings/show'
+	  	redirect '/bookings'
 	  else
 	  	"error"
 	  end

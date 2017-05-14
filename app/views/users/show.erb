@@ -1,6 +1,5 @@
 <h1><%= current_user.username %>'s reservations</h1>
 
-
 <h2>Reservation history:</h2>
 <ul>
 <% Booking.where(user_id: session[:id]).order(:time).each { |booking| %>

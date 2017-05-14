@@ -25,11 +25,11 @@ class UserController < ApplicationController
 		erb :'/users/show'
 	end
 
-	post  '/users' do #login auth
+	post '/users' do #login auth
 		user = User.find_by(username: params[:username])
     if user && user.authenticate(params[:password])
       session[:id] = user.id
-      redirect "/bookings/show"
+      redirect '/bookings/show'
 		else
 			#flash msg
 			redirect '/signup'
@@ -37,10 +37,11 @@ class UserController < ApplicationController
 
 	end
 
-	post  '/users/new' do #sign up auth
+	post '/users/new' do #sign up auth
 		if !params[:username].empty? && !params[:password].empty?
 			user = User.create(username: params[:username], password: params[:password])
-			redirect "/bookings/show"
+			session[:id] = user.id
+			redirect '/bookings/show'
 		else
 			#flash msg
 			redirect '/signup'

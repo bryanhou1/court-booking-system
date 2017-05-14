@@ -29,7 +29,7 @@ class BookingController < ApplicationController
 		if logged_in?
 			erb :'/bookings/show'
 		else
-			redirect '/users/login'
+			redirect '/login'
 		end
 	end
 

@@ -7,7 +7,11 @@ class ApplicationController < Sinatra::Base
 	end
 
 	get '/' do
-		erb :index
+    if !logged_in?
+		  erb :index
+    else
+      redirect '/bookings/show'
+    end
 	end
 
 	helpers do
@@ -30,5 +34,4 @@ class ApplicationController < Sinatra::Base
   get '/debug' do
     binding.pry
   end
-
 end

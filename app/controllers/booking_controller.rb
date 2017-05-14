@@ -4,23 +4,20 @@ class BookingController < ApplicationController
 		if logged_in?
 			erb :'/booking/new'
 		else
-			#flash msg
 			redirect '/login'
 		end
 	end
 
 	post '/bookings' do
-		# binding.pry
 		booking = Booking.new(
 			time: DateTime.strptime(params[:time], '%Y-%m-%dT%H:%M:%S%z'),
 			user_id: session[:id],
 			court: '1'
 			)
-
+		
 		if booking.save
-			redirect "/bookings/#{booking.id}" #check
+			redirect '/bookings/show'
 		else
-			#flash msg
 			redirect '/bookings/new'
 		end
 	end
@@ -33,22 +30,13 @@ class BookingController < ApplicationController
 		end
 	end
 
-	get '/bookings/:id' do
-		@booking = Booking.find(params[:id])
-		if @booking
-			erb :'/bookings/show' ####check
-		else
-			
-		end
-	end
-
 	get '/bookings/:id/edit' do
 		@booking = Booking.find_by(id: params[:id])
 		if session[:id] == @booking.user.id
 			if @booking && @booking.user.id = session[:id]
 				erb :'/bookings/edit'
 			else
-				"error" #fix
+				"error"
 			end
 		else
 			redirect '/bookings/show'
@@ -61,17 +49,20 @@ class BookingController < ApplicationController
 		@booking.court = params[:court] 
 
   	if @booking.save
-  		redirect "/bookings/#{params[:id]}"
+  		redirect '/bookings/show'
   	else
   		"error"
   	end
 	end
 
 	delete '/bookings/:id/delete' do
-		#check authorization
-  	booking = Booking.find(params[:id])
-  	booking.destroy
-  	redirect '/bookings/show'
+		if current_user.id == session[:id]
+	  	booking = Booking.find(params[:id])
+	  	booking.destroy
+	  	redirect '/bookings/show'
+	  else
+	  	"error"
+	  end
   end
 
 end

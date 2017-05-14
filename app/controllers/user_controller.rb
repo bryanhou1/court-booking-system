@@ -31,7 +31,6 @@ class UserController < ApplicationController
       session[:id] = user.id
       redirect '/bookings/show'
 		else
-			#flash msg
 			redirect '/signup'
 		end
 
@@ -43,7 +42,6 @@ class UserController < ApplicationController
 			session[:id] = user.id
 			redirect '/bookings/show'
 		else
-			#flash msg
 			redirect '/signup'
 		end
 	end

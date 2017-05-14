@@ -1,4 +1,3 @@
-<% #put these in helper method %>
 <% start_of_week = DateTime.now.beginning_of_week%>
 <% end_of_week = start_of_week + 1.week %>
 <% day_counter = end_of_week %>
@@ -20,7 +19,6 @@
 					<input id="hidden" type="hidden" name="_method" value="delete">
 					<input type="submit" value="Delete" id="delete">
 				</form>
-
 			<% end %>
 		</li>
 	<% end %>

@@ -3,58 +3,139 @@
 <% day_counter = end_of_week %>
 
 <h1>Remaining reservations for the week:</h1>
+<table style="width:100%">
+  <tr>
+    <th>Court 1</th>
+    <th>Court 2</th>
+  </tr>
 
-<ul>
-<% Booking.where("time > ?", DateTime.now).order(:time).each { |booking| %>
-	<% if booking.time < end_of_week %>
-		<li>
-			Booking time: <%= "#{booking.time.strftime("%F")}\n" %>
-			Booked by: <%= booking.user.username %>
-			<% if current_user == booking.user %>
-				<form action="/bookings/<%= booking.id %>/edit" method ="get">
-					<input type="submit" value='Edit'>
-				</form>
+	<tr>
+		<td><ul>
+		<% Booking.where("time > ? AND court = ?", DateTime.now, 1).order(:time).each { |booking| %>
+			<% if booking.time < end_of_week %>
+				<li>
+					Booking time: <%= "#{booking.time.strftime("%F")}\n" %>
+					Booked by: <%= booking.user.username %>
+					<% if current_user == booking.user %>
 
-				<form action="/bookings/<%= booking.id %>/delete" method="post">
-					<input id="hidden" type="hidden" name="_method" value="delete">
-					<input type="submit" value="Delete" id="delete">
-				</form>
+						<form action="/bookings/<%= booking.id %>/edit" method ="get">
+							<input type="submit" value='Edit'>
+						</form>
+
+						<form action="/bookings/<%= booking.id %>/delete" method="post">
+							<input id="hidden" type="hidden" name="_method" value="delete">
+							<input type="submit" value="Delete" id="delete">
+						</form>
+
+					<% end %>
+				</li>
 			<% end %>
-		</li>
-	<% end %>
-<% } %>
-</ul>
+		<% } %>
+		</ul></td>
+
+		<td><ul>
+		<% Booking.where("time > ? AND court = ?", DateTime.now, 2).order(:time).each { |booking| %>
+			<% if booking.time < end_of_week %>
+				<li>
+					Booking time: <%= "#{booking.time.strftime("%F")}\n" %>
+					Booked by: <%= booking.user.username %>
+					<% if current_user == booking.user %>
+
+						<form action="/bookings/<%= booking.id %>/edit" method ="get">
+							<input type="submit" value='Edit'>
+						</form>
+
+						<form action="/bookings/<%= booking.id %>/delete" method="post">
+							<input id="hidden" type="hidden" name="_method" value="delete">
+							<input type="submit" value="Delete" id="delete">
+						</form>
+
+					<% end %>
+				</li>
+			<% end %>
+		<% } %>
+		</ul></td>
+	</tr>
+</table>
+
+
+
+
 
 <h1>Bookings in the next week:</h1>
+<table style="width:100%">
+  <tr>
+    <th>Court 1</th>
+    <th>Court 2</th>
+  </tr>
+  <tr>
+  	<td>
+  		<ul>
+			<% while day_counter < end_of_week + 1.week do %>
+				<li>
+					<%= "Booking time: #{day_counter.strftime("%F")}" %>
+					<% if (booking = Booking.where("time = ? AND court = ?", day_counter, 1)) != [] %>
+						Booked by: <%= booking.first.user.username %>
+						<% if current_user == booking.first.user %>
+							<form action="/bookings/<%= booking.first.id %>/edit" method ="get">
+								<input type="submit" value='Edit'>
+							</form>
 
-<ul>
-<% while day_counter < end_of_week + 1.week do %>
-	<li>
-		<%= "Booking time: #{day_counter.strftime("%F")}" %>
+							<form action="/bookings/<%= booking.first.id %>/delete" method="post">
+								<input id="hidden" type="hidden" name="_method" value="delete">
+								<input type="submit" value="Delete" id="delete">
+							</form>
 
-		<% if (booking = Booking.where("time = ?", day_counter)) != [] %>
-			Booked by: <%= booking.first.user.username %>
-			<% if current_user == booking.first.user %>
-				<form action="/bookings/<%= booking.first.id %>/edit" method ="get">
-					<input type="submit" value='Edit'>
-				</form>
-
-				<form action="/bookings/<%= booking.first.id %>/delete" method="post">
-					<input id="hidden" type="hidden" name="_method" value="delete">
-					<input type="submit" value="Delete" id="delete">
-				</form>
-
+						<% end %>
+					<% else %>
+						<form action="/bookings" method="post">
+							<input type="hidden" name="time" value="<%= day_counter %>">
+							<input type="hidden" name="court" value="1">
+							<input type="submit" value="Book Now">
+						</form>
+					<% end %>
+				</li>
+				<% day_counter += 1.day %>
 			<% end %>
-		<% else %>
-			<form action="/bookings" method="post">
-				<input type="hidden" name="time" value="<%= day_counter %>">
-				<input type="submit" value="Book Now">
-			</form>
-		<% end %>
-	</li>
-	<% day_counter += 1.day %>
-<% end %>
-</ul>
+			</ul>
+  	</td>
+  	<% day_counter = end_of_week %>
+  	<td>
+  		<ul>
+			<% while day_counter < end_of_week + 1.week do %>
+				<li>
+					<%= "Booking time: #{day_counter.strftime("%F")}" %>
+
+					<% if (booking = Booking.where("time = ? AND court = ?", day_counter, 2)) != [] %>
+						Booked by: <%= booking.first.user.username %>
+						<% if current_user == booking.first.user %>
+							<form action="/bookings/<%= booking.first.id %>/edit" method ="get">
+								<input type="submit" value='Edit'>
+							</form>
+
+							<form action="/bookings/<%= booking.first.id %>/delete" method="post">
+								<input id="hidden" type="hidden" name="_method" value="delete">
+								<input type="submit" value="Delete" id="delete">
+							</form>
+
+						<% end %>
+					<% else %>
+						<form action="/bookings" method="post">
+							<input type="hidden" name="time" value="<%= day_counter %>">
+							<input type="hidden" name="court" value="2">
+							<input type="submit" value="Book Now">
+						</form>
+					<% end %>
+				</li>
+				<% day_counter += 1.day %>
+			<% end %>
+			</ul>
+
+  	</td>
+  </tr>
+</table>
+
+
 
 Click <a href="/users/<%= current_user.username %>">here</a> to see all of your bookings.<br>
 

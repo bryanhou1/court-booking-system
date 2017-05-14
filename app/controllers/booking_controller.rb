@@ -33,10 +33,10 @@ class BookingController < ApplicationController
 		end
 	end
 
-	get '/bookings/:id' do ####check if necessary
+	get '/bookings/:id' do
 		@booking = Booking.find(params[:id])
 		if @booking
-			erb :'/bookings/show'
+			erb :'/bookings/show' ####check
 		else
 			
 		end

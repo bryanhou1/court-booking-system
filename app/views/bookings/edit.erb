@@ -1,1 +1,31 @@
-edit.erb
+<% start_of_week = DateTime.now.beginning_of_week%>
+<% end_of_week = start_of_week + 1.week %>
+<% day_counter = DateTime.now.beginning_of_day %>
+ 
+<form action="/bookings/<%= @booking.id %>" method="post">
+	<input id="hidden" type="hidden" name="_method" value="patch">
+	
+	<label>Reservation Time:</label>
+  <select name="time">
+		<% while day_counter < end_of_week + 1.week%>
+			<% day_counter += 1.day %>
+			<option value="<%= day_counter %>" id="time" <%= 'disabled' if Booking.where("time = ?", day_counter) != [] %> <%= 'selected' if day_counter == @booking.time %>>
+
+				<%= day_counter.strftime("%F") %>
+			</option>
+		<% end %>
+	</select><br>
+
+	<label>Court:</label>
+  <input type="radio" name="court" value="1" <%= 'checked' if @booking.court == 1 %>> Court 1
+  <input type="radio" name="court" value="2" <%= 'checked' if @booking.court == 2 %>> Court 2
+  
+	<br>
+
+	<input type="submit" value="Update" id="update">
+</form>
+<br><br>
+	
+
+Time created: <%= @booking.created_at %><br>
+Last updated: <%= @booking.updated_at %><br>

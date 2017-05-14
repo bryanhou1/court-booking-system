@@ -12,7 +12,7 @@
 	<tr>
 		<td><ul>
 		<% Booking.where("time > ? AND court = ?", DateTime.now, 1).order(:time).each { |booking| %>
-			<% if booking.time < end_of_week %>
+			<% if booking.time < end_of_week + 1.hour %>
 				<li>
 					Booking time: <%= "#{booking.time.strftime("%F")}\n" %>
 					Booked by: <%= booking.user.username %>
@@ -35,7 +35,7 @@
 
 		<td><ul>
 		<% Booking.where("time > ? AND court = ?", DateTime.now, 2).order(:time).each { |booking| %>
-			<% if booking.time < end_of_week %>
+			<% if booking.time < end_of_week + 1.hour %>
 				<li>
 					Booking time: <%= "#{booking.time.strftime("%F")}\n" %>
 					Booked by: <%= booking.user.username %>

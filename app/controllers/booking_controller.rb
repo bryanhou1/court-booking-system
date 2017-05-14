@@ -44,10 +44,14 @@ class BookingController < ApplicationController
 
 	get '/bookings/:id/edit' do
 		@booking = Booking.find_by(id: params[:id])
-		if @booking && @booking.user.id = session[:id]
-			erb :'/bookings/edit'
+		if session[:id] == @booking.user.id
+			if @booking && @booking.user.id = session[:id]
+				erb :'/bookings/edit'
+			else
+				"error" #fix
+			end
 		else
-			"error" #fix
+			redirect '/bookings/show'
 		end
 	end
 

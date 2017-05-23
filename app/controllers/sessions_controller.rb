@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-
 	get '/login' do #login page
 		if logged_in?
 			redirect '/bookings'
@@ -14,11 +13,11 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect '/bookings'
 		else
-			redirect "/signup"
+			redirect "/login?message=1"
 		end
 	end
 
-	delete '/signout' do #signout page
+	delete '/signout' do #signout
 		session.clear
 		redirect '/login'
 	end

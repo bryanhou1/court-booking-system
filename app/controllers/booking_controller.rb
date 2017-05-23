@@ -1,13 +1,4 @@
 class BookingController < ApplicationController
-
-	get '/bookings/new' do #create new booking
-		if logged_in?
-			erb :'/booking/new'
-		else
-			redirect '/login'
-		end
-	end
-
 	post '/bookings' do
 		booking = Booking.new(
 			time: DateTime.strptime(params[:time], '%Y-%m-%dT%H:%M:%S%z'),
@@ -24,7 +15,7 @@ class BookingController < ApplicationController
 
 	get '/bookings' do
 		if logged_in?
-			erb :'/bookings/show'
+			erb :'/bookings/index'
 		else
 			redirect '/login'
 		end
@@ -32,14 +23,10 @@ class BookingController < ApplicationController
 
 	get '/bookings/:id/edit' do
 		@booking = Booking.find_by(id: params[:id])
-		if session[:user_id] == @booking.user.id && @booking.time > DateTime.now
-			if @booking
+		if @booking && session[:user_id] == @booking.user.id && @booking.time > DateTime.now
 				erb :'/bookings/edit'
-			else
-				"error"
-			end
 		else
-			redirect '/bookings'
+				redirect '/bookings?message=2'
 		end
 	end
 
@@ -57,12 +44,12 @@ class BookingController < ApplicationController
 				@booking.save
 		  	redirect '/bookings'
 			else
-				#no changes made
-				redirect '/bookings'
+				#no option selected
+				redirect '/bookings?message=4'
 			end
 		else
 			#multiple options selected
-			"error."
+			redirect '/bookings?message=3'
 		end
 
 	end
@@ -73,7 +60,7 @@ class BookingController < ApplicationController
 	  	booking.destroy
 	  	redirect '/bookings'
 	  else
-	  	"error"
+	  	redirect '/bookings?message=2'
 	  end
   end
 

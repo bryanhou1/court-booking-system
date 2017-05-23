@@ -14,15 +14,16 @@ class UserController < ApplicationController
 			session[:user_id] = user.id
 			redirect '/bookings'
 		else
-			redirect '/signup'
+			redirect "/signup?message=#{user.errors.full_messages.join(', ')+'.'}"if user.errors
 		end
 	end
 
 	get '/users/:username' do
+
 		if params[:username] == current_user.username
 			erb :'/users/show'
 		else
-			redirect '/bookings'
+			redirect '/bookings?message=2' #unauthorized access
 		end
 	end
 end

@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<style>
 		form {display: inline;}
+
 		table, th, td {
 		    border: 1px solid black;
 		    border-collapse: collapse;
@@ -14,18 +15,87 @@
 		    text-align: left;    
 		}
 
+		ul.navbar {
+	    list-style-type: none;
+	    margin: 0;
+	    padding: 0;
+	    overflow: hidden;
+	    background-color: #f1f1f1;
+		}
+
+		ul.navbar li {
+	    float: left;
+		}
+
+		ul.navbar li a, ul.navbar li button {
+	    display: block;
+	    color: #000;
+	    text-align: center;
+	    padding: 8px 16px;
+	    text-decoration: none;
+		}
+
+		ul.navbar li a:hover, ul.navbar li button:hover {
+	    background-color: #555;
+    	color: white;
+		}
+
+		button {
+     background:none;
+     color:inherit;
+     border:none; 
+     padding:0;
+     font: inherit;
+		}
+		
+		div.warning_message {
+			color: red;
+		}
 	</style>
-	<title></title>
+	<title>Court Booking System</title>
 </head>
 <body>
 
-	<% if logged_in? %>
-		<form action="/signout" method="post">
+<!-- Header -->
+<ul class='navbar'>
+<% if logged_in?%>
+
+  <li><a href="/bookings">All Bookings</a></li>
+  <li><a href="/users/<%=current_user.username%>">Personal Bookings</a></li>
+  <li style="float:right">
+  	<form action="/signout" method="post">
 			<input type="hidden" name="_method" value="delete">
-			<input type="submit" value="Log out">
+			<button type="submit">Log Out</button>
 		</form>
-	<% end %>
+  </li>
+
+<% else %>
+
+  <li style="float:right"><a href="/login">Log In</a></li>
+  <li style="float:right"><a href="/signup">Sign Up</a></li>
+
+<% end %>
+</ul>
+
+
+	<% if params[:message]%>
+		<div class="warning_message">
+			<% case params[:message]
+			when '1' %>
+				Authentication error. Please try again.
+			<% when '2' %>
+				Error. Unauthorized access.
+			<% when '3' %>
+				Multiple options selected. No changes made.
+			<% when '4' %>
+				No option selected. No changes made.
+			<% else %>
+				<%= params[:message] %>
+			<% end %>
+		</div>
+	<% end %><br>
 
 	<%= yield %>
+	
 </body>
 </html>

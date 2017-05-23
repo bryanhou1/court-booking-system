@@ -2,7 +2,7 @@
 
 <h2>Reservation history:</h2>
 <ul>
-<% Booking.where(user_id: session[:id]).order(:time).each { |booking| %>
+<% Booking.where(user_id: session[:user_id]).order(:time).each { |booking| %>
 		<% if booking.time < DateTime.now %>
 			<li>
 				 <%= "Court #{booking.court} booked for #{booking.time.strftime("%F")}\n"%>
@@ -13,7 +13,7 @@
 
 <h2>Active bookings:</h2>
 <ul>
-<% Booking.where(user_id: session[:id]).order(:time).each { |booking| %>
+<% Booking.where(user_id: session[:user_id]).order(:time).each { |booking| %>
 	<% if booking.time >= DateTime.now %>
 		<li>
 			<%= "Court #{booking.court} - booked for #{booking.time.strftime("%F")}\n"%>
@@ -21,7 +21,7 @@
 				<input type="submit" value='Edit'>
 			</form>
 
-			<form action="/bookings/<%= booking.id %>/delete" method="post">
+			<form action="/bookings/<%= booking.id %>" method="post">
 				<input id="hidden" type="hidden" name="_method" value="delete">
 				<input type="submit" value="Delete" id="delete">
 			</form>
@@ -29,5 +29,3 @@
 	<% end %>
 <% } %>
 </ul>
-
-Click <a href="/bookings/show">here</a> to see all current bookings.<br>

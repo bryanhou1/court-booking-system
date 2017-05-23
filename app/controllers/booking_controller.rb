@@ -11,7 +11,7 @@ class BookingController < ApplicationController
 	post '/bookings' do
 		booking = Booking.new(
 			time: DateTime.strptime(params[:time], '%Y-%m-%dT%H:%M:%S%z'),
-			user_id: session[:id],
+			user_id: session[:user_id],
 			court: params[:court]
 			)
 
@@ -32,7 +32,7 @@ class BookingController < ApplicationController
 
 	get '/bookings/:id/edit' do
 		@booking = Booking.find_by(id: params[:id])
-		if session[:id] == @booking.user.id && @booking.time > DateTime.now
+		if session[:user_id] == @booking.user.id && @booking.time > DateTime.now
 			if @booking
 				erb :'/bookings/edit'
 			else
@@ -68,7 +68,7 @@ class BookingController < ApplicationController
 	end
 
 	delete '/bookings/:id' do
-		if current_user.id == session[:id]
+		if current_user.id == session[:user_id]
 	  	booking = Booking.find(params[:id])
 	  	booking.destroy
 	  	redirect '/bookings'

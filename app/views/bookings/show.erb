@@ -12,7 +12,7 @@
 	<tr>
 		<td><ul>
 		<% Booking.where("time > ? AND court = ?", DateTime.now, 1).order(:time).each { |booking| %>
-			<% if booking.time < end_of_week + 1.hour %>
+			<% if booking.time < end_of_week + 1.second %>
 				<li>
 					Booking time: <%= "#{booking.time.strftime("%F")}\n" %>
 					Booked by: <%= booking.user.username %>
@@ -22,7 +22,7 @@
 							<input type="submit" value='Edit'>
 						</form>
 
-						<form action="/bookings/<%= booking.id %>/delete" method="post">
+						<form action="/bookings/<%= booking.id %>" method="post">
 							<input id="hidden" type="hidden" name="_method" value="delete">
 							<input type="submit" value="Delete" id="delete">
 						</form>
@@ -35,7 +35,7 @@
 
 		<td><ul>
 		<% Booking.where("time > ? AND court = ?", DateTime.now, 2).order(:time).each { |booking| %>
-			<% if booking.time < end_of_week + 1.hour %>
+			<% if booking.time < end_of_week + 1.second %>
 				<li>
 					Booking time: <%= "#{booking.time.strftime("%F")}\n" %>
 					Booked by: <%= booking.user.username %>
@@ -45,7 +45,7 @@
 							<input type="submit" value='Edit'>
 						</form>
 
-						<form action="/bookings/<%= booking.id %>/delete" method="post">
+						<form action="/bookings/<%= booking.id %>" method="post">
 							<input id="hidden" type="hidden" name="_method" value="delete">
 							<input type="submit" value="Delete" id="delete">
 						</form>
@@ -81,7 +81,7 @@
 								<input type="submit" value='Edit'>
 							</form>
 
-							<form action="/bookings/<%= booking.first.id %>/delete" method="post">
+							<form action="/bookings/<%= booking.first.id %>" method="post">
 								<input id="hidden" type="hidden" name="_method" value="delete">
 								<input type="submit" value="Delete" id="delete">
 							</form>
@@ -113,7 +113,7 @@
 								<input type="submit" value='Edit'>
 							</form>
 
-							<form action="/bookings/<%= booking.first.id %>/delete" method="post">
+							<form action="/bookings/<%= booking.first.id %>" method="post">
 								<input id="hidden" type="hidden" name="_method" value="delete">
 								<input type="submit" value="Delete" id="delete">
 							</form>

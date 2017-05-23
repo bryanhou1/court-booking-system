@@ -3,7 +3,7 @@ User.create(username: "user_2", password: "22")
 User.create(username: "user_3", password: "33")
 
 require 'date'
-time = DateTime.new(2017, 5, 1, 0, 0, 0, '-04:00')
+time = DateTime.new(2017, 5, 17, 0, 0, 0, '-04:00')
 Booking.create([
 {
 	time: time,

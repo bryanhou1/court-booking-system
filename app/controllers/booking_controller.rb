@@ -67,7 +67,7 @@ class BookingController < ApplicationController
 
 	end
 
-	delete '/bookings/:id/delete' do
+	delete '/bookings/:id' do
 		if current_user.id == session[:id]
 	  	booking = Booking.find(params[:id])
 	  	booking.destroy

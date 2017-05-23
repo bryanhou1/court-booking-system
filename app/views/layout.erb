@@ -18,7 +18,14 @@
 	<title></title>
 </head>
 <body>
+
+	<% if logged_in? %>
+		<form action="/signout" method="post">
+			<input type="hidden" name="_method" value="delete">
+			<input type="submit" value="Log out">
+		</form>
+	<% end %>
+
 	<%= yield %>
-	<%= '<a href="/signout">Log out</a>'if logged_in? %>
 </body>
 </html>
